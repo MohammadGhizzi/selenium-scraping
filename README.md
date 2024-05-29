@@ -59,7 +59,7 @@ Once the URLs are collected, the code:
 
 ### Data Cleaning
 
-After data collection, the `data_cleaning.py` script:
+After data collection, the `cleaning.py` script:
 
 1. **Reads the CSV File**: Loads the scraped data into a Pandas DataFrame.
 2. **Cleans Special Characters**: Removes or replaces special characters from the data.
