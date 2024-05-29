@@ -7,13 +7,10 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
-import asyncio
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-from asyncio import Semaphore
 import logging
 
 # Define the locators with both XPath and CSS selectors
@@ -77,15 +74,11 @@ field_order = [
     "bracelet_material", "bracelet_color", "clasp_type", "movement", "caliber", "power_reserve", "frequency",
     "jewels", "features", "description", "short_description"
 ]
-# List of URLs
+# List of example URLs
 urls = [
-    "https://www.harrywinston.com/en/products/high-jewelry-timepieces-by-harry-winston",
-    "https://www.harrywinston.com/en/products/harry-winston-emerald-collection",
-    "https://www.harrywinston.com/en/products/harry-winston-the-ocean-collection",
-    "https://www.harrywinston.com/en/products/harry-winston-the-avenue-collection",
-    "https://www.harrywinston.com/en/products/harry-winston-the-premier-collection",
-    "https://www.harrywinston.com/en/products/harry-winston-midnight-collection",
-    "https://www.harrywinston.com/en/products/histoire-de-tourbillon-and-opus"
+    "https://example.com/collection1",
+    "https://example.com/collection2",
+    "https://example.com/collection3"
 ]
 
 logging.basicConfig(level=logging.INFO)
@@ -95,11 +88,6 @@ def init_driver():
     chrome_options = Options()
     chrome_options.add_argument('--disable-gpu')  # Recommended when images are disabled
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-    #prefs = {
-    #"profile.media_playback_requires_user_gesture": True,  # Disable media loading
-    #"profile.default_content_settings.popups": 0  # Block pop-ups (optional)
-#}
-    #chrome_options.add_experimental_option("prefs", prefs)
     chrome_options.add_argument("--disable-cache")
     chrome_options.add_argument("--disable-application-cache")
     service = Service(ChromeDriverManager().install())
@@ -112,8 +100,8 @@ def handle_intercepted_click(element, driver):
         element.click()
     except Exception as e:
         logger.warning(f"Exception: {e}. Clicking intercepted, scrolling and clicking again.")
-        driver.execute_script("arguments[0].scrollIntoView();", element)
-        driver.execute_script("arguments[0].click();", element)
+        driver.execute_script("arguments[0].scrollIntoView();")
+        driver.execute_script("arguments[0].click();")
 
 # Function to scrape product URLs
 def scrape_product_urls(driver):
@@ -239,7 +227,7 @@ async def scrape_collection_products(collection_url, driver, sem, writer):
 # Main function to scrape all URLs and write to CSV
 async def main():
     sem = asyncio.Semaphore(30)  # Adjust this number as needed
-    csv_file = "nyuyussxaasaryu.csv"
+    csv_file = "scraped_data.csv"
     drivers = [init_driver() for _ in range(len(urls))]
     
     with open(csv_file, mode="w", newline="", encoding="utf-8") as file:
