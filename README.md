@@ -40,7 +40,7 @@ And its a project for Data Engineering bootcamp, ill update the code time to tim
 4. The cleaned data will be saved in `cleaned_data.csv`.
 
 ## How the Code Works
-
+.
 ### URL Collection
 
 The code collects product URLs from each collection page asynchronously to speed up the scraping process. It does this by:
