@@ -76,9 +76,13 @@ field_order = [
 ]
 # List of example URLs
 urls = [
-    "https://example.com/collection1",
-    "https://example.com/collection2",
-    "https://example.com/collection3"
+    "https://www.harrywinston.com/en/products/high-jewelry-timepieces-by-harry-winston",
+    "https://www.harrywinston.com/en/products/harry-winston-emerald-collection",
+    "https://www.harrywinston.com/en/products/harry-winston-the-ocean-collection",
+    "https://www.harrywinston.com/en/products/harry-winston-the-avenue-collection",
+    "https://www.harrywinston.com/en/products/harry-winston-the-premier-collection",
+    "https://www.harrywinston.com/en/products/harry-winston-midnight-collection",
+    "https://www.harrywinston.com/en/products/histoire-de-tourbillon-and-opus"
 ]
 
 logging.basicConfig(level=logging.INFO)
