@@ -34,7 +34,7 @@ And its a project for Data Engineering bootcamp, ill update the code time to tim
 
 ## Usage
 
-1. Update the `urls` list in `Scraper.py` with the collection URLs that suits it ( i wont provide the one i scraped).
+1. Update the `urls` list in `Scraper.py` with the collection URLs in Harry Winston, make sure its watches collection.
 2. Run the scraper:
 3. After scraping is complete, run the data cleaning script:
 4. The cleaned data will be saved in `cleaned_data.csv`.
