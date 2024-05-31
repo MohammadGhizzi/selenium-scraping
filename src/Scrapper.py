@@ -85,9 +85,11 @@ urls = [
     "https://www.harrywinston.com/en/products/histoire-de-tourbillon-and-opus"
 ]
 
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Function to initialize the WebDriver
 def init_driver():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -98,8 +100,8 @@ def init_driver():
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-cache")
     chrome_options.add_argument("--disable-application-cache")
-    
-    service = Service("/usr/local/bin/chromedriver")
+
+    service = Service(executable_path=ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
 
@@ -124,10 +126,15 @@ def clear_browser_cache(driver):
 # Function to extract data from HTML content
 async def extract_data_from_html(html_content, url):
     soup = BeautifulSoup(html_content, 'html.parser')
-    data = {}
-    data["type"] = None
-    data["brand"] = "Harry Winston"
-    data["watch_URL"] = url
+    data = {
+        "type": None,
+        "brand": "Harry Winston",
+        "watch_URL": url,
+        "image_URL": None,
+        "water_resistance": None,
+        "reference_number": None,
+        "parent_model": None
+    }
 
     # Extract image URL
     try:
@@ -252,8 +259,8 @@ async def main():
         driver.quit()
 
 if __name__ == "__main__":
-    now = time.time()
+    start_time = time.time()
     asyncio.run(main())
-    then = time.time()
+    end_time = time.time()
 
-    logger.info(f'Runtime: {then-now} seconds')
+    logger.info(f'Runtime: {end_time - start_time} seconds')
