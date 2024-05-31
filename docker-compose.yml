@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  scraper:
+    build: .
+    container_name: scraping_container
+    volumes:
+      - ./src:/app/src
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "python /app/src/Scrapper.py && python /app/src/cleaning.py"

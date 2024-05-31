@@ -90,11 +90,16 @@ logger = logging.getLogger(__name__)
 
 def init_driver():
     chrome_options = Options()
-    chrome_options.add_argument('--disable-gpu')  # Recommended when images are disabled
-    chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--window-size=1920x1080")
+    chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-cache")
     chrome_options.add_argument("--disable-application-cache")
-    service = Service(ChromeDriverManager().install())
+    
+    service = Service("/usr/local/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
 
