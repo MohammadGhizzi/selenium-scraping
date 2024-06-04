@@ -6,6 +6,7 @@ services:
     container_name: scraping_container
     volumes:
       - ./src:/app/src
+      - ./output:/app/output  # Add this line to map the output directory
     environment:
       - PYTHONUNBUFFERED=1
     command: >

@@ -9,21 +9,15 @@ RUN apt-get update && apt-get install -y \
     apt-transport-https \
     software-properties-common \
     unzip \
+    firefox-esr \
     --no-install-recommends
 
-# Install Google Chrome
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
-    apt-get update && \
-    apt-get install -y google-chrome-stable
-
-# Install ChromeDriver
-ENV CHROMEDRIVER_VERSION=125.0.6422.141
-RUN wget -q https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip && \
-    unzip chromedriver-linux64.zip && \
-    rm chromedriver-linux64.zip && \
-    mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && \
-    chmod +x /usr/local/bin/chromedriver
+# Install Geckodriver
+RUN wget -q https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-linux64.tar.gz && \
+    tar -xzf geckodriver-v0.31.0-linux64.tar.gz && \
+    mv geckodriver /usr/local/bin/ && \
+    chmod +x /usr/local/bin/geckodriver && \
+    rm geckodriver-v0.31.0-linux64.tar.gz
 
 # Install Python dependencies
 COPY requirements.txt .

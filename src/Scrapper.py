@@ -3,16 +3,15 @@ import aiohttp
 import csv
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+import geckodriver_autoinstaller
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import logging
-
 # Define the locators with both XPath and CSS selectors
 locators = {
     "reference_number": {'xpath': '/html/body/div[2]/main/div/div[1]/div/div/div/div[2]/div/div/div[4]/div/p', 'css': '.pdp-header__product-description--product-number'},
@@ -85,25 +84,24 @@ urls = [
     "https://www.harrywinston.com/en/products/histoire-de-tourbillon-and-opus"
 ]
 
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Function to initialize the WebDriver
 def init_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--window-size=1920x1080")
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--disable-cache")
-    chrome_options.add_argument("--disable-application-cache")
-
-    service = Service(executable_path=ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    firefox_options = Options()
+    firefox_options.add_argument("--headless")
+    firefox_options.add_argument("--no-sandbox")
+    firefox_options.add_argument("--disable-dev-shm-usage")
+    firefox_options.add_argument("--disable-gpu")
+    firefox_options.add_argument("--window-size=1920x1080")
+    firefox_options.add_argument("--disable-extensions")
+    firefox_options.add_argument("--disable-cache")
+    firefox_options.add_argument("--disable-application-cache")
+    
+    service = Service("/usr/local/bin/geckodriver")  # Path to manually installed geckodriver
+    driver = webdriver.Firefox(service=service, options=firefox_options)
     return driver
+
 
 # Function to handle ElementClickInterceptedException
 def handle_intercepted_click(element, driver):
@@ -126,15 +124,10 @@ def clear_browser_cache(driver):
 # Function to extract data from HTML content
 async def extract_data_from_html(html_content, url):
     soup = BeautifulSoup(html_content, 'html.parser')
-    data = {
-        "type": None,
-        "brand": "Harry Winston",
-        "watch_URL": url,
-        "image_URL": None,
-        "water_resistance": None,
-        "reference_number": None,
-        "parent_model": None
-    }
+    data = {}
+    data["type"] = None
+    data["brand"] = "Harry Winston"
+    data["watch_URL"] = url
 
     # Extract image URL
     try:
@@ -243,7 +236,7 @@ async def scrape_collection_products(collection_url, driver, sem, writer):
 # Main function to scrape all URLs and write to CSV
 async def main():
     sem = asyncio.Semaphore(30)  # Adjust this number as needed
-    csv_file = "scraped_data.csv"
+    csv_file = "/app/output/scraped_data.csv"
     drivers = [init_driver() for _ in range(len(urls))]
     
     with open(csv_file, mode="w", newline="", encoding="utf-8") as file:
@@ -259,8 +252,8 @@ async def main():
         driver.quit()
 
 if __name__ == "__main__":
-    start_time = time.time()
+    now = time.time()
     asyncio.run(main())
-    end_time = time.time()
+    then = time.time()
 
-    logger.info(f'Runtime: {end_time - start_time} seconds')
+    logger.info(f'Runtime: {then-now} seconds')

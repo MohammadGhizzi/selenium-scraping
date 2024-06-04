@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Read the scraped CSV file
-df = pd.read_csv("scraped_data.csv")
+df = pd.read_csv("/app/output/scraped_data.csv")
 
 # Function to clean special characters from the data
 def clean_data(df):
@@ -17,6 +17,6 @@ def clean_data(df):
 cleaned_df = clean_data(df)
 
 # Save the cleaned data to a new CSV file
-cleaned_df.to_csv("cleaned_data.csv", index=False)
+cleaned_df.to_csv("/app/output/cleaned_data.csv", index=False)
 
-print("Data cleaning completed. Cleaned data saved to 'cleaned_data.csv'.")
+print("Data cleaning completed. Cleaned data saved to '/app/output/cleaned_data.csv'.")
