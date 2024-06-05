@@ -63,9 +63,9 @@ After data collection, the `cleaning.py` script:
 
 1. **Reads the CSV File**: Loads the scraped data into a Pandas DataFrame.
 2. **Cleans Special Characters**: Removes or replaces special characters from the data.
-3. **Handles Null Values**: Fills null values with "N/A".
+3. **Handles Null Values**: Fills null values with "NaN".
 4. **Saves Cleaned Data**: Writes the cleaned data to a new CSV file.
 
 ## Logging
 
-Logging is implemented to track the scraping process and handle exceptions. Adjust the logging level as needed.
+Logging is implemented to track the scraping process and handle exceptions.
