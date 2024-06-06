@@ -1,10 +1,10 @@
-# Web Scraper for Watch Data
+# Web Scrapper for Watch Data
 
 ## Description
 
 This project is designed to scrape watch data from predefined collection URLs using Selenium and BeautifulSoup. The data is then saved into a CSV file and cleaned using Pandas.
 
-And its a project for Data Engineering bootcamp, ill update the code time to time.
+And it's a project for a Data Engineering bootcamp, I'll update the code from time to time.
 
 ## Features
 
@@ -21,9 +21,11 @@ And its a project for Data Engineering bootcamp, ill update the code time to tim
 
 ## Installation
 
+### Local Setup
+
 1. Clone the repository:
     ```bash
-    git clone 
+    git clone <repository-url>
     cd scrapper
     ```
 
@@ -32,15 +34,44 @@ And its a project for Data Engineering bootcamp, ill update the code time to tim
     pip install -r requirements.txt
     ```
 
+### Docker Setup
+
+You can also run the Scrapper using Docker, which ensures a consistent environment without the need for manual setup.
+
+1. Clone the repository:
+    ```bash
+    git clone <repository-url>
+    cd scrapper
+    ```
+
+2. Build the Docker image:
+    ```bash
+    docker build -t Scrapper-image .
+    ```
+
+3. Run the Docker container using Docker Compose:
+    ```bash
+    docker-compose up
+    ```
+
+This will set up a Docker container with all the necessary dependencies and run the Scrapper.
+
 ## Usage
 
-1. Update the `urls` list in `Scraper.py` with the collection URLs in Harry Winston, make sure its watches collection.
-2. Run the scraper:
+1. Update the `urls` list in `Scrapper.py` with the collection URLs for Harry Winston, making sure it’s a watch collection.
+2. Run the Scrapper:
+    ```bash
+    python Scrapper.py
+    ```
+   If you are using Docker, the Scrapper will automatically run when the container starts.
 3. After scraping is complete, run the data cleaning script:
+    ```bash
+    python cleaning.py
+    ```
 4. The cleaned data will be saved in `cleaned_data.csv`.
 
 ## How the Code Works
-.
+
 ### URL Collection
 
 The code collects product URLs from each collection page asynchronously to speed up the scraping process. It does this by:

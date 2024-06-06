@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
-import geckodriver_autoinstaller
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
