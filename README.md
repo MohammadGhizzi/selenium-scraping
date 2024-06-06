@@ -99,4 +99,4 @@ After data collection, the `cleaning.py` script:
 
 ## Logging
 
-Logging is implemented to track the scraping process and handle exceptions. Adjust the logging level as needed.
+Logging is implemented to track the scraping process and handle exceptions.
